@@ -5,17 +5,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rmfashion.domain.Variados;
-import com.rmfashion.repositories.VariadosRepository;
+import com.rmfashion.domain.Variado;
+import com.rmfashion.repositories.VariadoRepository;
+import com.rmfashion.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class VariadosService {
 	
 	@Autowired
-	private VariadosRepository repo;
+	private VariadoRepository repo;
 
-	public Variados buscar(Integer id) {
-		Optional<Variados> obj = repo.findById(id);
-		return obj.orElse(null);
+	public Variado buscar(Integer id) {
+		Optional<Variado> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não Encontrado! Id: " + id + ", Tipo: " + Variado.class.getName()));
 	}
 }

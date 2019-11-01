@@ -8,30 +8,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class CategoriaMasculino implements Serializable{
+public class ProdutoVariado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String nome;	
+	private Double preco;
 	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categoriasmasculinos")
-	private List<ProdutoMasculino> produtosmasculinos = new ArrayList<>();
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable(name = "PRODUTOVARIADO_VARIADO",
+				joinColumns = @JoinColumn(name = "produtovariado_id"),
+				inverseJoinColumns = @JoinColumn(name = "variado_id")
+			)
+	private List<Variado> variados = new ArrayList<>(); 
 	
-	public CategoriaMasculino() {		
+	public ProdutoVariado() {		
 	}
 
-	public CategoriaMasculino(Integer id, String nome) {
+	public ProdutoVariado(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 
 	public Integer getId() {
@@ -49,15 +57,22 @@ public class CategoriaMasculino implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<ProdutoMasculino> getProdutosmasculinos() {
-		return produtosmasculinos;
+
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setProdutosmasculinos(List<ProdutoMasculino> produtosmasculinos) {
-		this.produtosmasculinos = produtosmasculinos;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
-	
+
+	public List<Variado> getVariados() {
+		return variados;
+	}
+
+	public void setVariados(List<Variado> variados) {
+		this.variados = variados;
+	}
 
 	@Override
 	public int hashCode() {
@@ -75,7 +90,7 @@ public class CategoriaMasculino implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaMasculino other = (CategoriaMasculino) obj;
+		ProdutoVariado other = (ProdutoVariado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,5 +98,7 @@ public class CategoriaMasculino implements Serializable{
 			return false;
 		return true;
 	}
+	
+	
 
 }

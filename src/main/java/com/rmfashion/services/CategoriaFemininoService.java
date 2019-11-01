@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rmfashion.domain.CategoriaFeminino;
 import com.rmfashion.repositories.CategoriaFemininoRepository;
+import com.rmfashion.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaFemininoService {
@@ -16,7 +17,7 @@ public class CategoriaFemininoService {
 	
 	public CategoriaFeminino buscar(Integer id) {
 		Optional<CategoriaFeminino> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não Encontrado! Id: " + id + ", Tipo: " + CategoriaFeminino.class.getName()));
 	}
 
 }

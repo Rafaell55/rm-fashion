@@ -3,9 +3,10 @@ package com.rmfashion.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.rmfashion.domain.Variados;
+import com.rmfashion.domain.Cidade;
 
 @Repository
-public interface VariadosRepository extends JpaRepository<Variados, Integer>{
+public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
+
 
 }

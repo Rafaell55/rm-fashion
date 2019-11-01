@@ -1,19 +1,16 @@
 package com.rmfashion.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class CategoriaMasculino implements Serializable{
+public class Cidade implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -21,17 +18,19 @@ public class CategoriaMasculino implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categoriasmasculinos")
-	private List<ProdutoMasculino> produtosmasculinos = new ArrayList<>();
 	
-	public CategoriaMasculino() {		
+	@ManyToOne
+	@JoinColumn(name = "estado_id")
+	private Estado estado;
+	
+	public Cidade() {		
 	}
 
-	public CategoriaMasculino(Integer id, String nome) {
+	public Cidade(Integer id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.estado = estado;
 	}
 
 	public Integer getId() {
@@ -49,15 +48,14 @@ public class CategoriaMasculino implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<ProdutoMasculino> getProdutosmasculinos() {
-		return produtosmasculinos;
+
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setProdutosmasculinos(List<ProdutoMasculino> produtosmasculinos) {
-		this.produtosmasculinos = produtosmasculinos;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -75,7 +73,7 @@ public class CategoriaMasculino implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaMasculino other = (CategoriaMasculino) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,5 +81,7 @@ public class CategoriaMasculino implements Serializable{
 			return false;
 		return true;
 	}
+	
+	
 
 }

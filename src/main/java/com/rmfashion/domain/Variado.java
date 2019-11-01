@@ -1,14 +1,19 @@
 package com.rmfashion.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Variados implements Serializable{
+public class Variado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -16,10 +21,14 @@ public class Variados implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	public Variados() {		
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "variados")
+	private List<ProdutoVariado> produtosvariados = new ArrayList<>();
+	
+	public Variado() {		
 	}
 
-	public Variados(Integer id, String nome) {
+	public Variado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -40,6 +49,14 @@ public class Variados implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public List<ProdutoVariado> getProdutosvariados() {
+		return produtosvariados;
+	}
+
+	public void setProdutosvariados(List<ProdutoVariado> produtosvariados) {
+		this.produtosvariados = produtosvariados;
+	}
 
 	@Override
 	public int hashCode() {
@@ -57,7 +74,7 @@ public class Variados implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Variados other = (Variados) obj;
+		Variado other = (Variado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -65,7 +82,5 @@ public class Variados implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 
 }

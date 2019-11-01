@@ -8,12 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class CategoriaMasculino implements Serializable{
+public class Estado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -21,14 +21,15 @@ public class CategoriaMasculino implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categoriasmasculinos")
-	private List<ProdutoMasculino> produtosmasculinos = new ArrayList<>();
 	
-	public CategoriaMasculino() {		
+	@JsonIgnore
+	@OneToMany(mappedBy = "estado")
+	private List<Cidade> cidades = new ArrayList<>();
+	
+	public Estado() {		
 	}
 
-	public CategoriaMasculino(Integer id, String nome) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -49,15 +50,14 @@ public class CategoriaMasculino implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<ProdutoMasculino> getProdutosmasculinos() {
-		return produtosmasculinos;
+
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setProdutosmasculinos(List<ProdutoMasculino> produtosmasculinos) {
-		this.produtosmasculinos = produtosmasculinos;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -75,7 +75,7 @@ public class CategoriaMasculino implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaMasculino other = (CategoriaMasculino) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,5 +83,7 @@ public class CategoriaMasculino implements Serializable{
 			return false;
 		return true;
 	}
+	
+	
 
 }
